@@ -1,33 +1,57 @@
 def reward_function(params):
-    '''
-    Example of penalize steering, which helps mitigate zig-zag behaviors
-    '''
+    """
+    Reward function for training a racing car in a simulation environment.
     
-    # Read input parameters
+    Input Parameters:
+    - all_wheels_on_track (bool): Indicates if all wheels are on the track
+    - distance_from_center (float): Distance of the car from the track center
+    - track_width (float): Total width of the track
+    - speed (float): Current speed of the car
+    - progress (float): Percentage of track completed
+    - steering_angle (float): Current steering angle of the car
+    
+    Returns:
+    float: Calculated reward value
+    """
+    # Extracting parameters
+    all_wheels_on_track = params['all_wheels_on_track']
     distance_from_center = params['distance_from_center']
     track_width = params['track_width']
-    steering = abs(params['steering_angle']) # Only need the absolute steering angle
+    speed = params['speed']
+    progress = params['progress']
+    abs_steering = abs(params['steering_angle'])
 
-    # Calculate 3 marks that are farther and father away from the center line
-    marker_1 = 0.1 * track_width
-    marker_2 = 0.25 * track_width
-    marker_3 = 0.5 * track_width
+    # Initialize reward
+    reward = 1.0  # Base reward to ensure positive reinforcement
 
-    # Give higher reward if the car is closer to center line and vice versa
-    if distance_from_center <= marker_1:
-        reward = 1
-    elif distance_from_center <= marker_2:
-        reward = 0.5
-    elif distance_from_center <= marker_3:
-        reward = 0.1
+    # Reward for staying on track (critical for safe driving)
+    if all_wheels_on_track:
+        reward += 10.0  # Significant bonus for keeping all wheels on track
     else:
-        reward = 1e-3  # likely crashed/ close to off track
+        # Heavily penalize going off track
+        reward *= 0.3  # Reduced reward if any wheel is off track
 
-    # Steering penality threshold, change the number based on your action space setting
-    ABS_STEERING_THRESHOLD = 15
+    # Centerline tracking
+    center_bonus = 1.0 - (distance_from_center / (track_width / 2))
+    reward += center_bonus  # Reward for staying close to center
 
-    # Penalize reward if the car is steering too much
-    if steering > ABS_STEERING_THRESHOLD:
+    # Speed reward with diminishing returns
+    speed_reward = min(speed, 4.0)  # Cap speed reward
+    reward += speed_reward
+
+    # Steering penalty
+    STEERING_THRESHOLD = 25.0
+    if abs_steering > STEERING_THRESHOLD:
+        # Penalize sharp turns
         reward *= 0.8
 
-    return float(reward)
+    # Progress tracking
+    progress_bonus = progress / 100.0
+    reward += progress_bonus
+
+    # Edge proximity penalty
+    if distance_from_center > (track_width / 2) * 0.8:
+        reward *= 0.5  # Significant penalty for being near track edges
+
+    # Ensure reward is always a float and within a reasonable range
+    return max(0.01, float(reward))

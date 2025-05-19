@@ -1,0 +1,38 @@
+import math
+
+def reward_function(params):
+    
+
+    # Read input parameters
+    all_wheels_on_track = params['all_wheels_on_track']
+    distance_from_center = params['distance_from_center']
+    track_width = params['track_width']
+    speed = params['speed']
+    progress = params['progress']
+    steps = params['steps']
+
+
+    # Define weights for different reward components
+    speed_weight = 0.4
+    center_weight = 0.4
+    completion_weight = 0.2
+
+    # Define thresholds and desired values
+    max_speed = 4.0  # You might need to adjust this based on your track and testing
+    center_threshold = track_width * 0.25  # Half of the car can be off the center line
+
+    # Initialize reward
+    reward = 1e-3
+
+    # Reward for staying on track
+    if not all_wheels_on_track:
+        return float(1e-3)
+
+    # Reward for proximity to the center line
+    if distance_from_center <= center_threshold:
+        reward += center_weight * (1 - (distance_from_center / center_threshold))
+
+    # Reward for speed
+    reward += speed_weight * (speed / max_speed)
+
+    return float(reward)
