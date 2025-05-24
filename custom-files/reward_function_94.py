@@ -29,7 +29,7 @@ def reward_function(params):
         reward += 10.0  # Significant bonus for keeping all wheels on track
     else:
         # Heavily penalize going off track
-        reward *= 0.3  # Reduced reward if any wheel is off track
+        reward = 1e-3  # Reduced reward if any wheel is off track
 
     # Centerline tracking
     center_bonus = 1.0 - (distance_from_center / (track_width / 2))
@@ -40,14 +40,14 @@ def reward_function(params):
     reward += speed_reward
 
     # Steering penalty
-    STEERING_THRESHOLD = 25.0
+    STEERING_THRESHOLD = 20.0
     if abs_steering > STEERING_THRESHOLD:
         # Penalize sharp turns
         reward *= 0.8
 
-    # Progress tracking DZ
-    #progress_bonus = progress / 100.0
-    #reward += progress_bonus
+    # Progress tracking
+    progress_bonus = progress / 100.0
+    reward += progress_bonus
 
     # Edge proximity penalty
     if distance_from_center > (track_width / 2) * 0.8:

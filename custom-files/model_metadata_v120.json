@@ -1,0 +1,95 @@
+{
+    "action_space": [
+        {
+            "steering_angle": -3.8373,
+            "speed": 1.3961
+        },
+        {
+            "steering_angle": -10.6491,
+            "speed": 3.4292
+        },
+        {
+            "steering_angle": 15.1613,
+            "speed": 2.2264
+        },
+        {
+            "steering_angle": 15.3339,
+            "speed": 1.3999
+        },
+        {
+            "steering_angle": -6.8634,
+            "speed": 2.3361
+        },
+        {
+            "steering_angle": -4.076,
+            "speed": 1.7123
+        },
+        {
+            "steering_angle": 11.7905,
+            "speed": 3.4364
+        },
+        {
+            "steering_angle": 2.3203,
+            "speed": 1.431
+        },
+        {
+            "steering_angle": 5.5508,
+            "speed": 1.7303
+        },
+        {
+            "steering_angle": 15.7738,
+            "speed": 1.7262
+        },
+        {
+            "steering_angle": 24.5204,
+            "speed": 1.4209
+        },
+        {
+            "steering_angle": -12.0327,
+            "speed": 1.4207
+        },
+        {
+            "steering_angle": 3.3985,
+            "speed": 2.2327
+        },
+        {
+            "steering_angle": -0.0831,
+            "speed": 4
+        },
+        {
+            "steering_angle": 0.495,
+            "speed": 3.4347
+        },
+        {
+            "steering_angle": 7.2055,
+            "speed": 2.7339
+        },
+        {
+            "steering_angle": 8.5346,
+            "speed": 1.4058
+        },
+        {
+            "steering_angle": -6.4021,
+            "speed": 2.7858
+        },
+        {
+            "steering_angle": -15.7287,
+            "speed": 1.6905
+        },
+        {
+            "steering_angle": 30,
+            "speed": 1.3
+        },
+        {
+            "steering_angle": -30,
+            "speed": 1.3
+        }
+    ],
+    "sensor": [
+        "FRONT_FACING_CAMERA"
+    ],
+    "neural_network": "DEEP_CONVOLUTIONAL_NETWORK_SHALLOW",
+    "training_algorithm": "clipped_ppo",
+    "action_space_type": "discrete",
+    "version": "5"
+}

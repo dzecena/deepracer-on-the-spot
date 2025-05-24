@@ -45,9 +45,9 @@ def reward_function(params):
         # Penalize sharp turns
         reward *= 0.8
 
-    # Progress tracking DZ
-    #progress_bonus = progress / 100.0
-    #reward += progress_bonus
+    # Progress tracking
+    progress_bonus = progress / 100.0
+    reward += progress_bonus
 
     # Edge proximity penalty
     if distance_from_center > (track_width / 2) * 0.8:
